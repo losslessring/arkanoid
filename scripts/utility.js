@@ -1,8 +1,8 @@
 
 const getRandomInt = (min, max) =>{
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 //Сравнение координат объекта и массива объектов
@@ -27,6 +27,24 @@ const getScreenCoords = (selector) =>{
 		//let rect = document.querySelector(selector).getBoundingClientRect()
 		return document.querySelector(selector).getBoundingClientRect()
 		//return {x: rect.x, y: rect.y}
+	}
+
+const transferCoordsFromDisplay = (object, property, dom_elements) =>{
+		let coords = []
+		for(let i = 0; i < dom_elements.length; i++){
+			let rect = dom_elements[i].getBoundingClientRect()
+			//coords.push({x:rect.x, y: rect.y})
+			//Надо переписать, чтобы не менять состояние, придумать структуру данных	
+			//this.cells[i].x = rect.x
+			//this.cells[i].y = rect.y
+
+			//const old = this.cells[i]
+			//const update = { x: rect.x, y: rect.y }
+
+			
+			//Можно оператором развертки сделать					
+			object[property][i] = { ...object[property][i], ...{ x: rect.x, y: rect.y }}
+		}
 	}
 
 
@@ -64,5 +82,6 @@ export {
 			checkIntersection,
 			checkPropertyInArray,
 			closeEnough,
-			getScreenCoords
+			getScreenCoords,
+			transferCoordsFromDisplay
 		}

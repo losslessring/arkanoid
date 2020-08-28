@@ -4,13 +4,15 @@ import DisplayField from './DisplayField.js'
 import Display from './Display.js'
 import Bat from './Bat.js'
 import Ball from './ball.js'
+import Control from './control.js'
 
 import {
             getRandomInt,
             checkIntersection,
             checkPropertyInArray,
             closeEnough,
-            getScreenCoords
+            getScreenCoords,
+            transferCoordsFromDisplay
         } from './utility.js'
 
 
@@ -25,14 +27,17 @@ console.log(field)
 
 
 let display_field = new DisplayField(document.getElementById("container"), 
-	field.rows, field.cols, field.cells, 0)
+	field.rows, field.cols, 'cell')
 
 
 //Получить координаты контейнера для начальной установки биты и шара
 const container_coords = getScreenCoords('#container')
 
-let bat = new Bat(container_coords.right / 2, container_coords.bottom - 40)
+let bat = new Bat(container_coords.right / 2, container_coords.bottom - 60, 1, 5)
 console.log(bat)
+
+let bat_inside = new DisplayField(document.getElementById("bat"), 
+    bat.cols, 1, 'bat-inside')
 
 let display_bat = new Display('#bat', bat)
 
@@ -47,62 +52,49 @@ const display_ball = new Display('#ball', ball)
 
 
 
+
 const mainCycle = (position, increment, boundary) => {
-	document.onkeydown = function(e){
-        
-        //if (e.repeat) { return }
-        
-        switch(e.keyCode){
 
-        	case 32:                
-                console.log('space')
-                clearInterval(timerId)
-                break
-            case 37:
 
-                console.log('left')
-                bat.x -=20
-                break
-            case 38:
-                
-                break
-            case 39:
 
-            	console.log('right')
-                bat.x +=20
-                break
-            case 40:
-   
-                console.log('down')
-                
-                break
-        }
-    }           
+     
+
+                  
                 //Взять координаты кирпичей на экране и передать их в Поле
                 let bricks = document.querySelectorAll('.cell')
                 field.getCoordsFromDisplay(bricks)
                 
-                //console.log(getScreenCoords(bat,'#bat'))
-                // let brick_rects = []
-                // for(let brick of bricks){
-                //     let rect = brick.getBoundingClientRect() 
-                //     //console.log(`top: ${rect.top}, right: ${rect.right}, bottom: ${rect.bottom}, left: ${rect.left}`)
-                //     brick_rects.push(rect)
+                
+                //Переношу координаты - функция с побочным эффектом, ну да ладно
+                transferCoordsFromDisplay(bat, "cells", document.querySelectorAll('.bat-inside'))
+                bat.calcDifference()
+                console.log(bat.cells)
 
-                // }
-                // console.log(bricks)
-                //checkIntersection(ball, brick_rects, 100)
+                //Прикольная функциональная запись, оставлю
+                // let coords = [...document.querySelectorAll('.bat-inside')].map((element) =>{
+                //     return element.getBoundingClientRect()
+                // })
+                
 
-                //display_field.update(field.cells,'wall',"deepSkyBlue")
+                // document.querySelectorAll('.bat-inside').forEach((element) => {
+                //     console.log(element.getBoundingClientRect()
+                //         )})
+
                 display_field.update(field.cells,'active',"deepSkyBlue","white")
 
 				let velocity = {x:1, y: -10}
-				let timerId = setInterval(() => {																														
-				        //console.log(ball.x, ball.y)		
+
+
+				let timerId = setInterval(() => {
+
+                        control.move(bat)
+                        bat.update()
+				        console.log(bat)     
+                        //console.log(ball.x, ball.y)		
                         ball.move(velocity)
                         let hit_cell = checkIntersection(ball, field.cells, 40)
                         //console.log(hit_cell)
-                        let hit_bat = checkIntersection(ball, [bat], 40)
+                        let hit_bat = checkIntersection(ball, bat.cells, 40)
                         //console.log(bat)
                         if (hit_cell && hit_cell.active ){
                             
@@ -129,8 +121,11 @@ const mainCycle = (position, increment, boundary) => {
 
 
 						
-					}, 50)
+					}, 10)
 
+                    //Создаем контроллер, здесь, внизу потому что надо ему передавать
+                    //timerId для остановки игры
+                    const control = new Control(5, timerId)
 				
 		}
 

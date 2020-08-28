@@ -2,7 +2,7 @@
 
 export default class DisplayField {
 
-    constructor (container, rows, cols, cells) {
+    constructor (container, rows, cols, class_name) {
         
         //Generate grid field based on rows and columns
         container.style.setProperty('--grid-rows', rows)
@@ -13,8 +13,8 @@ export default class DisplayField {
         for (let c = 0; c < (rows * cols); c++) {
             let cell = document.createElement("div");
              //Текст внутри клетки               
-             // cell.innerText = (c);
-            container.appendChild(cell).className = "cell";
+              cell.innerText = (c);
+            container.appendChild(cell).className = class_name;
         }
         
         this.cells = document.getElementsByClassName('cell')
@@ -39,7 +39,7 @@ export default class DisplayField {
                     }
                 }
                 //cell.innerText = (cells[c]);
-                //this.cells[i].innerText = `x:${parseInt(array[i].x)} y:${parseInt(array[i].y) }`
+                this.cells[i].innerText = `x:${parseInt(array[i].x)} y:${parseInt(array[i].y) }`
                 //this.cells[i].innerText = array[i].active
                 //let rect = this.cells[i].getBoundingClientRect()
                 //this.cells[i].innerText = `top: ${rect.top}, right: ${rect.right}, bottom: ${rect.bottom}, left: ${rect.left}`

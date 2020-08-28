@@ -2,16 +2,36 @@ export default class Field {
     constructor(rows = 10, cols = 10){
 		this.rows = rows;
         this.cols = cols;
-        this.cells = Array(rows * cols).fill({active: 0, x: null, y: null})
+        this.cells = Array(rows * cols).fill({active: 0, wall: 0, x: null, y: null})
         this.cells_data = []
 
         this.drawLevel()
         //this.projectedFigure = this.cells
         
-        // this.leftBoundary = this.createBoundary(0, (i, index, cols) => (i * cols) + index, cols, rows)
-        // this.rightBoundary = this.createBoundary(cols - 1, (i, index, cols) => (i * cols) + index , cols, rows)
-        // this.bottomBoundary = this.createBoundary(cols, (i, index, cols) => (rows * cols) - i - 1 , cols, cols).reverse()
+        this.left_wall = this.createBoundary(0, (i, index, cols) => (i * cols) + index, cols, rows)
+        this.right_wall = this.createBoundary(cols - 1, (i, index, cols) => (i * cols) + index , cols, rows)
+        this.floor = this.createBoundary(cols, (i, index, cols) => (rows * cols) - i - 1 , cols, cols).reverse()
 
+        this.setCellsProperty('wall', 1, this.left_wall)
+        this.setCellsProperty('active', 1, this.left_wall)
+        this.setCellsProperty('wall', 1, this.right_wall)
+        this.setCellsProperty('active', 1, this.right_wall)
+        this.setCellsProperty('floor', 1, this.floor)
+        this.setCellsProperty('active', 1, this.floor)
+        //console.log(this.cells)
+	}
+
+	setCellsProperty(property, value, array){
+		for(let cell = 0; cell < this.cells.length; cell++ ){
+			for(let i = 0; i < array.length; i++){
+				if(cell === array[i]){
+					//console.log(this.cells[cell])
+					this.cells[cell][property] = value
+				}
+			}
+		}
+		
+		
 	}
 
 	//Сделаю изменение состояния в отдельном уровне абстракции

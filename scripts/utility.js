@@ -7,16 +7,19 @@ const getRandomInt = (min, max) =>{
 
 //Сравнение координат объекта и массива объектов
 const checkIntersection = (object, objects, interval) =>{
-	
+	//let result = []
 	for(let i = 0; i < objects.length; i++){
 		//console.log(Math.abs(object.y - objects[i].y <= interval))
 		if (Math.abs(object.x - objects[i].x) <= interval && 
 			Math.abs(object.y - objects[i].y) <= interval){
-			console.log(`Hit ball_x: ${parseInt(object.x)} ball_y: ${parseInt(object.y)}\nbrick_x: ${parseInt(objects[i].x)} brick_y: ${parseInt(objects[i].y)}`)
-			//console.log(objects[i].active)
-			return objects[i]
+			//console.log(`x: ${Math.abs(object.x - objects[i].x)}`)
+			//console.log(`y: ${Math.abs(object.y - objects[i].y)}`)
+			//console.log(`Hit ball_x: ${parseInt(object.x)} ball_y: ${parseInt(object.y)}\nbrick_x: ${parseInt(objects[i].x)} brick_y: ${parseInt(objects[i].y)}`)
+			//console.log(objects[i])
+			return objects[i]			
 		}
 	}
+	return null
 }
 
 const getScreenCoords = (selector) =>{

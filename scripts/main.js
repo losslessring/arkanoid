@@ -39,7 +39,7 @@ let display_bat = new Display('#bat', bat)
 
 
 
-const ball = new Ball(container_coords.right / 2, container_coords.bottom - 40)
+const ball = new Ball((container_coords.right / 2)+5, container_coords.bottom - 180)
 const display_ball = new Display('#ball', ball)
 
 //console.log(getScreenCoords('#container'))
@@ -92,14 +92,38 @@ const mainCycle = (position, increment, boundary) => {
                 // }
                 // console.log(bricks)
                 //checkIntersection(ball, brick_rects, 100)
-				
+
+                //display_field.update(field.cells,'wall',"deepSkyBlue")
+                display_field.update(field.cells,'active',"deepSkyBlue","white")
+
+				let velocity = {x:1, y: -10}
 				let timerId = setInterval(() => {																														
 				        //console.log(ball.x, ball.y)		
-                        ball.move({x:1, y: -3})
-                        checkIntersection(ball, field.cells, 5)
+                        ball.move(velocity)
+                        let hit_cell = checkIntersection(ball, field.cells, 40)
+                        //console.log(hit_cell)
+                        let hit_bat = checkIntersection(ball, [bat], 40)
+                        //console.log(bat)
+                        if (hit_cell && hit_cell.active ){
+                            
+                                //hit_cell.active = 0
+                            if (hit_cell.wall){
+                                velocity = {x: -velocity.x, y:velocity.y}    
+                            }
+                            else {
+                                velocity = {x: velocity.x, y:-velocity.y}
+                            }
+                            //velocity = {x: getRandomInt(0,10), y:getRandomInt(0,10) }   
+                        }
+
+                         if(hit_bat){
+                             velocity = {x: getRandomInt(0,10), y:-velocity.y }   
+                         }
+                        
                         //console.log(checkPropertyInArray(ball, field.cells, "x", closeEnough, 0.5))
                         //checkIntersection(ball, field.cells)
-						display_field.update(field.cells,'active')
+						//display_field.update(field.cells,'active',"deepSkyBlue","white")
+
 						display_bat.update(bat)
                         display_ball.update(ball)
 

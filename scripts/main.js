@@ -12,7 +12,8 @@ import {
             checkPropertyInArray,
             closeEnough,
             getScreenCoords,
-            transferCoordsFromDisplay
+            transferCoordsFromDisplay,
+            getDomProperty
         } from './utility.js'
 
 
@@ -33,7 +34,7 @@ let display_field = new DisplayField(document.getElementById("container"),
 //Получить координаты контейнера для начальной установки биты и шара
 const container_coords = getScreenCoords('#container')
 
-let bat = new Bat(container_coords.right / 2, container_coords.bottom - 60, 1, 5)
+let bat = new Bat(container_coords.right / 2, container_coords.bottom - 20, 1, 5)
 console.log(bat)
 
 let bat_inside = new DisplayField(document.getElementById("bat"), 
@@ -57,77 +58,136 @@ const mainCycle = (position, increment, boundary) => {
 
 
 
-     
+    // document.addEventListener('mousemove', (e)=>{
+    //     console.log(`x: ${e.pageX} y: ${e.pageY}`)
+    // })
 
                   
-                //Взять координаты кирпичей на экране и передать их в Поле
-                let bricks = document.querySelectorAll('.cell')
-                field.getCoordsFromDisplay(bricks)
+    //Взять координаты кирпичей на экране и передать их в Поле
+    let bricks = document.querySelectorAll('.cell')
+    field.getCoordsFromDisplay(bricks)
+    
+    
+    //Переношу координаты - функция с побочным эффектом, ну да ладно
+    transferCoordsFromDisplay(bat, "cells", document.querySelectorAll('.bat-inside'))
+    bat.calcDifference()
+    console.log(bat.cells)
+
+    //Прикольная функциональная запись, оставлю
+    // let coords = [...document.querySelectorAll('.bat-inside')].map((element) =>{
+    //     return element.getBoundingClientRect()
+    // })
+    
+
+    // document.querySelectorAll('.bat-inside').forEach((element) => {
+    //     console.log(element.getBoundingClientRect()
+    //         )})
+
+    display_field.update(field.cells,'type', 'brick', "deepSkyBlue")
+    display_field.update(field.cells,'type', 'empty', "white")
+    display_field.update(field.cells,'type', 'wall', "green")
+    display_field.update(field.cells,'type', 'floor', "pink")
+    //display_field.update(field.cells,'active', 0, "white")
+    //display_field.update(field.cells,'wall', 1, "green")
+	
+    let velocity = {x:1, y: -5}
+
+
+	let timerId = setInterval(() => {
+
+            control.move(bat)
+            bat.update()
+	        //console.log(bat)     
+            	
+            ball.move(velocity)
+
+            display_bat.update(bat)
+            display_ball.update(ball)
+            //console.log(ball.x, ball.y) 
+            //console.log(ball)
+            //console.log(getDomProperty(document.querySelectorAll('#ball'), 'getBoundingClientRect'))
+            let hit_cell = checkIntersection(ball, field.cells, 50)
+            //console.log(hit_cell)
+            let hit_bat = checkIntersection(ball, bat.cells, 50)
+
+            let hit = { ...hit_cell, ...hit_bat}
+            //console.log(bat.cells)
+            //console.log(hit)
+
+            if(hit){
                 
+                switch (hit.type) {
+                  
+                  case 'brick':
+                                      
+                    velocity = {x: velocity.x, y:-velocity.y}
+                    hit_cell.type = 'empty'
+                    display_field.update(field.cells,'type', 'empty', "white")
+                  
+                    break
+
+                  case 'wall':
+
+                    velocity = {x: -velocity.x, y:velocity.y}
+                    
+                    break
+                  
+                  case 'bat':
+                    console.log(hit)
+                    velocity = {x: getRandomInt(0,5), y:-velocity.y } 
+                    
+                    break
+                  
+                  case 'floor':
+                    
+                    velocity = {x: velocity.x, y: -velocity.y}
+
+                    break
+                  
+                }
+
+            }
+
+            // if (hit_cell && hit_cell.type ==='brick'){
+            //     hit_cell.type = 'empty'
+            //     display_field.update(field.cells,'type', 'empty', "white")
+            // }
+            // if (hit_cell && hit_cell.active ){
                 
-                //Переношу координаты - функция с побочным эффектом, ну да ладно
-                transferCoordsFromDisplay(bat, "cells", document.querySelectorAll('.bat-inside'))
-                bat.calcDifference()
-                console.log(bat.cells)
+            //     hit_cell.active = 0
+            //     // display_field.update(field.cells,'active', 1, "deepSkyBlue")
+            //     // display_field.update(field.cells,'active', 0, "white")
+            //     // display_field.update(field.cells,'wall', 1, "green")
+            //     if (hit_cell.wall){
+            //         velocity = {x: -velocity.x, y:velocity.y}    
+            //     }
+            //     else {
+            //         velocity = {x: velocity.x, y:-velocity.y}
+            //     }
+            //     //velocity = {x: getRandomInt(0,10), y:getRandomInt(0,10) }   
+            // }
 
-                //Прикольная функциональная запись, оставлю
-                // let coords = [...document.querySelectorAll('.bat-inside')].map((element) =>{
-                //     return element.getBoundingClientRect()
-                // })
-                
+            //  if(hit_bat){
+            //      velocity = {x: getRandomInt(0,5), y:-velocity.y }   
+            //  }
 
-                // document.querySelectorAll('.bat-inside').forEach((element) => {
-                //     console.log(element.getBoundingClientRect()
-                //         )})
+            
+            //console.log(checkPropertyInArray(ball, field.cells, "x", closeEnough, 0.5))
+            //checkIntersection(ball, field.cells)
+			//display_field.update(field.cells,'active',"deepSkyBlue","white")
 
-                display_field.update(field.cells,'active',"deepSkyBlue","white")
+			// display_bat.update(bat)
+   //          display_ball.update(ball)
+//            console.log(getDomProperty(document.querySelectorAll('#ball'), 'getBoundingClientRect'))            
 
-				let velocity = {x:1, y: -10}
+			
+		}, 10)
 
-
-				let timerId = setInterval(() => {
-
-                        control.move(bat)
-                        bat.update()
-				        console.log(bat)     
-                        //console.log(ball.x, ball.y)		
-                        ball.move(velocity)
-                        let hit_cell = checkIntersection(ball, field.cells, 40)
-                        //console.log(hit_cell)
-                        let hit_bat = checkIntersection(ball, bat.cells, 40)
-                        //console.log(bat)
-                        if (hit_cell && hit_cell.active ){
-                            
-                                //hit_cell.active = 0
-                            if (hit_cell.wall){
-                                velocity = {x: -velocity.x, y:velocity.y}    
-                            }
-                            else {
-                                velocity = {x: velocity.x, y:-velocity.y}
-                            }
-                            //velocity = {x: getRandomInt(0,10), y:getRandomInt(0,10) }   
-                        }
-
-                         if(hit_bat){
-                             velocity = {x: getRandomInt(0,10), y:-velocity.y }   
-                         }
-                        
-                        //console.log(checkPropertyInArray(ball, field.cells, "x", closeEnough, 0.5))
-                        //checkIntersection(ball, field.cells)
-						//display_field.update(field.cells,'active',"deepSkyBlue","white")
-
-						display_bat.update(bat)
-                        display_ball.update(ball)
-
-
-						
-					}, 10)
-
-                    //Создаем контроллер, здесь, внизу потому что надо ему передавать
-                    //timerId для остановки игры
-                    const control = new Control(5, timerId)
-				
-		}
+        //Создаем контроллер, здесь, внизу потому что надо ему передавать
+        //timerId для остановки игры
+        const control = new Control(5, timerId)
+		
+}
 
 mainCycle(5, cols, field.cells.length)
 

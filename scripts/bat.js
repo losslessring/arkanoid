@@ -4,8 +4,7 @@ export default class Bat {
     	this.x = x
     	this.y = y
     	this.cols = cols
-    	this.cells = Array(rows * cols).fill({	active: 1, 
-    											bat:1, 
+    	this.cells = Array(rows * cols).fill({	type: 'bat', 
     											x: null, 
     											y: null, 
     											difference_x: null, 
@@ -16,8 +15,8 @@ export default class Bat {
 	calcDifference(){
 		for(let i = 0; i < this.cells.length; i++){
 			
-			this.cells[i].difference_x = 	this.x - this.cells[i].x
-			this.cells[i].difference_y = 	this.y - this.cells[i].y
+			this.cells[i].difference_x = 	this.cells[i].x - this.x
+			this.cells[i].difference_y = 	this.cells[i].y - this.y
 		}
 	}
 

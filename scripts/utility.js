@@ -43,10 +43,37 @@ const transferCoordsFromDisplay = (object, property, dom_elements) =>{
 
 			
 			//Можно оператором развертки сделать					
-			object[property][i] = { ...object[property][i], ...{ x: rect.x, y: rect.y }}
+			object[property][i] = { ...object[property][i], 
+				...{ x: rect.x + rect.width / 2, y: rect.y + rect.height / 2}}
 		}
 	}
 
+const getDomProperty = (dom_elements, method) =>{
+		let result = []
+		for(let i = 0; i < dom_elements.length; i++){
+			//let element_property = dom_elements[i][method]()
+			//console.log(method)
+			//console.log(dom_elements[i][])
+			result.push(dom_elements[i][method]())
+			//coords.push({x:rect.x, y: rect.y})
+			//Надо переписать, чтобы не менять состояние, придумать структуру данных	
+			//this.cells[i].x = rect.x
+			//this.cells[i].y = rect.y
+
+			//const old = this.cells[i]
+			//const update = { x: rect.x, y: rect.y }
+
+			
+			//Можно оператором развертки сделать					
+			// object[dest_property][i] = { ...object[dest_property][i],
+			// ...{ [source_property]: element_property[source_property],
+			// 	 [source_property]: element_property[source_property] 
+			//    }
+			// }
+
+		}
+		return result
+	}
 
 const checkPropertyInArray = (object, objects, property, operation, interval) =>{
 	let result = []
@@ -83,5 +110,6 @@ export {
 			checkPropertyInArray,
 			closeEnough,
 			getScreenCoords,
-			transferCoordsFromDisplay
+			transferCoordsFromDisplay,
+			getDomProperty
 		}

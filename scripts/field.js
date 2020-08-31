@@ -2,7 +2,7 @@ export default class Field {
     constructor(rows = 10, cols = 10){
 		this.rows = rows;
         this.cols = cols;
-        this.cells = Array(rows * cols).fill({active: 0, wall: 0, x: null, y: null})
+        this.cells = Array(rows * cols).fill({type: null, x: null, y: null})
         this.cells_data = []
 
         this.drawLevel()
@@ -11,13 +11,16 @@ export default class Field {
         this.left_wall = this.createBoundary(0, (i, index, cols) => (i * cols) + index, cols, rows)
         this.right_wall = this.createBoundary(cols - 1, (i, index, cols) => (i * cols) + index , cols, rows)
         this.floor = this.createBoundary(cols, (i, index, cols) => (rows * cols) - i - 1 , cols, cols).reverse()
+        this.roof = this.createBoundary(cols, (i, index, cols) => (1 * cols) - i - 1 , cols, cols).reverse()
+        //console.log(this.roof)
+         this.setCellsProperty('type','wall', this.left_wall)
+        // this.setCellsProperty('active', 1, this.left_wall)
+         this.setCellsProperty('type','wall', this.right_wall)
+        // this.setCellsProperty('active', 1, this.right_wall)
+         this.setCellsProperty('type', 'floor', this.floor)
+         this.setCellsProperty('type', 'floor', this.roof)
 
-        this.setCellsProperty('wall', 1, this.left_wall)
-        this.setCellsProperty('active', 1, this.left_wall)
-        this.setCellsProperty('wall', 1, this.right_wall)
-        this.setCellsProperty('active', 1, this.right_wall)
-        this.setCellsProperty('floor', 1, this.floor)
-        this.setCellsProperty('active', 1, this.floor)
+        // this.setCellsProperty('active', 1, this.floor)
         //console.log(this.cells)
 	}
 
@@ -53,9 +56,9 @@ export default class Field {
 			for(let x = 0; x < this.cols; x++){
 				
 				if (y > this.rows / 3){
-					field.push({active: 0, x: null, y: null})
+					field.push({type: 'empty', x: null, y: null})
 				} else {
-					field.push({active: 1, x: null, y: null})
+					field.push({type: 'brick', x: null, y: null})
 				}
 
 			}

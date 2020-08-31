@@ -33,7 +33,7 @@ html, body{
   height: 2em;
   position: absolute;
   background-color: red;
-  border-radius: 50%;
+  /*border-radius: 50%;*/
 }
 
 #bat {

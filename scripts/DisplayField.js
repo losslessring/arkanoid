@@ -22,22 +22,22 @@ export default class DisplayField {
     }
     // Update colors based on array values
     // Not very good that array is coming from outside, could cause errors.
-    update(array, property, color1, color0){
+    update(array, property, value, color1){
         //console.log(color0)
         if (array.length == this.cells.length){
             for (let i = 0; i < array.length; i++) {
                 //document.getElementsByClassName('cell')[c].style.backgroundColor = "blue"
                 
-                if(array[i][property] === 1){
+                if(array[i][property] === value){
                     if(color1){
                         this.cells[i].style.backgroundColor = color1
                     }
                 }
-                else {
-                    if(color0){
-                        this.cells[i].style.backgroundColor = color0   
-                    }
-                }
+                // else {
+                //     if(color0){
+                //         this.cells[i].style.backgroundColor = color0   
+                //     }
+                // }
                 //cell.innerText = (cells[c]);
                 this.cells[i].innerText = `x:${parseInt(array[i].x)} y:${parseInt(array[i].y) }`
                 //this.cells[i].innerText = array[i].active

@@ -134,13 +134,20 @@ const mainCycle = (position, increment, boundary) => {
                   
                   case 'bat':
                     console.log(hit)
-                    velocity = {x: getRandomInt(0,5), y:-velocity.y } 
+                    velocity = {x: getRandomInt(-5,5), y:-velocity.y } 
                     
                     break
                   
                   case 'floor':
                     
                     velocity = {x: velocity.x, y: -velocity.y}
+
+                    break
+
+                  case 'empty':
+                    
+                    //hit_cell.type = 'track'
+                    //display_field.update(field.cells,'type', 'track', "yellow")
 
                     break
                   

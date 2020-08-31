@@ -6,6 +6,8 @@ const getRandomInt = (min, max) =>{
 }
 
 //Сравнение координат объекта и массива объектов
+//Поскольку он перебирает массив сначала до конца, он находит быстрее
+//клетки с меньшими индексами, ближайшие к левому верхнему углу.
 const checkIntersection = (object, objects, interval) =>{
 	//let result = []
 	for(let i = 0; i < objects.length; i++){

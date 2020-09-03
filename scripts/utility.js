@@ -24,6 +24,8 @@ const checkIntersection = (object, objects, interval) =>{
 	return null
 }
 
+const checkAccurateIntersection = () =>{}
+
 const getScreenCoords = (selector) =>{
 		
 		//let rect = document.querySelector(selector).getBoundingClientRect()

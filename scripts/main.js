@@ -34,13 +34,14 @@ let display_field = new DisplayField(document.getElementById("container"),
 //Получить координаты контейнера для начальной установки биты и шара
 const container_coords = getScreenCoords('#container')
 
-let bat = new Bat(container_coords.right / 2, container_coords.bottom - 20, 1, 5)
+let bat = new Bat(container_coords.right / 2, container_coords.bottom - 80, 1, 5)
 console.log(bat)
 
 let bat_inside = new DisplayField(document.getElementById("bat"), 
     bat.cols, 1, 'bat-inside')
 
 let display_bat = new Display('#bat', bat)
+
 
 
 
@@ -105,11 +106,12 @@ const mainCycle = (position, increment, boundary) => {
             display_ball.update(ball)
             //console.log(ball.x, ball.y) 
             //console.log(ball)
-            //console.log(getDomProperty(document.querySelectorAll('#ball'), 'getBoundingClientRect'))
+            // console.log(getDomProperty(document.querySelectorAll('#ball'), 'getBoundingClientRect'))
             let hit_cell = checkIntersection(ball, field.cells, 50)
             //console.log(hit_cell)
             let hit_bat = checkIntersection(ball, bat.cells, 50)
 
+            //console.log({...hit_bat})
             let hit = { ...hit_cell, ...hit_bat}
             //console.log(bat.cells)
             //console.log(hit)
@@ -134,7 +136,7 @@ const mainCycle = (position, increment, boundary) => {
                   
                   case 'bat':
                     console.log(hit)
-                    velocity = {x: getRandomInt(-5,5), y:-velocity.y } 
+                    velocity = {x: hit.deflect_x, y:-velocity.y } 
                     
                     break
                   

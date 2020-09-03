@@ -81,7 +81,16 @@ export default class Field {
 
 			
 			//Можно оператором развертки сделать					
-			this.cells[i] = { ...this.cells[i], ...{ x: rect.x, y: rect.y }}
+			//this.cells[i] = { ...this.cells[i], ...{ x: rect.x, y: rect.y }}
+			this.cells[i] = { ...this.cells[i], ...{ x: rect.x,
+													 y: rect.y,
+													 top: rect.top,
+													 bottom: rect.bottom,
+													 left: rect.left,
+													 right: rect.right,
+													 height: rect.height,
+													 width: rect.width
+													  } }
 		}
 	}
 

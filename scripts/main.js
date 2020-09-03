@@ -13,7 +13,8 @@ import {
             closeEnough,
             getScreenCoords,
             transferCoordsFromDisplay,
-            getDomProperty
+            getDomProperty,
+            checkAccurateIntersection
         } from './utility.js'
 
 
@@ -107,14 +108,18 @@ const mainCycle = (position, increment, boundary) => {
             //console.log(ball.x, ball.y) 
             //console.log(ball)
             // console.log(getDomProperty(document.querySelectorAll('#ball'), 'getBoundingClientRect'))
-            let hit_cell = checkIntersection(ball, field.cells, 50)
+            //let hit_cell = checkIntersection(ball, field.cells, 50)
             //console.log(hit_cell)
             let hit_bat = checkIntersection(ball, bat.cells, 50)
 
             //console.log({...hit_bat})
-            let hit = { ...hit_cell, ...hit_bat}
+            //let hit = { ...hit_cell, ...hit_bat}
             //console.log(bat.cells)
             //console.log(hit)
+            // let hit_cell = checkAccurateIntersection(document.querySelector('#ball').getBoundingClientRect(),
+            //                         getDomProperty(document.querySelectorAll('.cell'), 'getBoundingClientRect'))
+            let hit_cell =  checkAccurateIntersection(document.querySelector('#ball').getBoundingClientRect(),  field.cells)
+            let hit = { ...hit_cell, ...hit_bat}
 
             if(hit){
                 
@@ -135,7 +140,7 @@ const mainCycle = (position, increment, boundary) => {
                     break
                   
                   case 'bat':
-                    console.log(hit)
+                    //console.log(hit)
                     velocity = {x: hit.deflect_x, y:-velocity.y } 
                     
                     break

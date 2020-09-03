@@ -24,7 +24,27 @@ const checkIntersection = (object, objects, interval) =>{
 	return null
 }
 
-const checkAccurateIntersection = () =>{}
+const checkAccurateIntersection = (object, objects) =>{
+	
+	//object_selector.getBoundingClientRect()
+	//console.log(objects_selector)
+	//console.log(objects)
+	for(let i = 0; i < objects.length; i++){
+	
+	if(object.top < objects[i].bottom &&
+		    object.bottom > objects[i].top &&
+		   object.left < objects[i].right &&
+		   object.right > objects[i].left){
+			
+			if(objects[i].type !== 'empty'){
+				console.log(objects[i].type)	
+			}
+			return objects[i]			
+
+		}
+	}
+	return null
+}
 
 const getScreenCoords = (selector) =>{
 		
@@ -115,5 +135,6 @@ export {
 			closeEnough,
 			getScreenCoords,
 			transferCoordsFromDisplay,
-			getDomProperty
+			getDomProperty,
+			checkAccurateIntersection
 		}

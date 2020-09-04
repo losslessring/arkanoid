@@ -6,29 +6,29 @@ export default class Field {
         this.cells_data = []
 
         this.drawLevel()
-        //this.projectedFigure = this.cells
         
+        //Генерирую по краям стены и пол с потолком - пересчитываю номера массива
         this.left_wall = this.createBoundary(0, (i, index, cols) => (i * cols) + index, cols, rows)
         this.right_wall = this.createBoundary(cols - 1, (i, index, cols) => (i * cols) + index , cols, rows)
         this.floor = this.createBoundary(cols, (i, index, cols) => (rows * cols) - i - 1 , cols, cols).reverse()
         this.roof = this.createBoundary(cols, (i, index, cols) => (1 * cols) - i - 1 , cols, cols).reverse()
-        //console.log(this.roof)
-         this.setCellsProperty('type','wall', this.left_wall)
-        // this.setCellsProperty('active', 1, this.left_wall)
-         this.setCellsProperty('type','wall', this.right_wall)
-        // this.setCellsProperty('active', 1, this.right_wall)
-         this.setCellsProperty('type', 'floor', this.floor)
-         this.setCellsProperty('type', 'floor', this.roof)
+        
+        //Задаю атрибуты
+        this.setCellsProperty('type','wall', this.left_wall)
+        
+        this.setCellsProperty('type','wall', this.right_wall)
+        
+        this.setCellsProperty('type', 'floor', this.floor)
+        this.setCellsProperty('type', 'floor', this.roof)
 
-        // this.setCellsProperty('active', 1, this.floor)
-        //console.log(this.cells)
+        
 	}
 
 	setCellsProperty(property, value, array){
 		for(let cell = 0; cell < this.cells.length; cell++ ){
 			for(let i = 0; i < array.length; i++){
 				if(cell === array[i]){
-					//console.log(this.cells[cell])
+					
 					this.cells[cell][property] = value
 				}
 			}
@@ -71,17 +71,7 @@ export default class Field {
 		let coords = []
 		for(let i = 0; i < cells.length; i++){
 			let rect = cells[i].getBoundingClientRect()
-			//coords.push({x:rect.x, y: rect.y})
-			//Надо переписать, чтобы не менять состояние, придумать структуру данных	
-			//this.cells[i].x = rect.x
-			//this.cells[i].y = rect.y
 
-			//const old = this.cells[i]
-			//const update = { x: rect.x, y: rect.y }
-
-			
-			//Можно оператором развертки сделать					
-			//this.cells[i] = { ...this.cells[i], ...{ x: rect.x, y: rect.y }}
 			this.cells[i] = { ...this.cells[i], ...{ x: rect.x,
 													 y: rect.y,
 													 top: rect.top,
@@ -108,14 +98,14 @@ export default class Field {
 
 
 	checkBoundary(position, boundary){
-		//console.log(boundary)
+		
 		return boundary.some(boundaryIndex => boundaryIndex == position)
 	}
 
 	snapshot(array) {
 
 		this.cells = array
-		//console.log(this.cells)
+		
 	}
 	checkCell(figure, scan_increment,value) {
 

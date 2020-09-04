@@ -33,20 +33,12 @@ export default class DisplayField {
                         this.cells[i].style.backgroundColor = color1
                     }
                 }
-                // else {
-                //     if(color0){
-                //         this.cells[i].style.backgroundColor = color0   
-                //     }
-                // }
-                //cell.innerText = (cells[c]);
-                //this.cells[i].innerText = `x:${parseInt(array[i].x)} y:${parseInt(array[i].y) }`
-                //this.cells[i].innerText = array[i].active
-                //let rect = this.cells[i].getBoundingClientRect()
-                //this.cells[i].innerText = `top: ${rect.top}, right: ${rect.right}, bottom: ${rect.bottom}, left: ${rect.left}`
+                
+                
 
             }
         }
     }
 
 }
-//export {displayField}
+

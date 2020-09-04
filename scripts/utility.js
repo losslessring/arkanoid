@@ -11,13 +11,10 @@ const getRandomInt = (min, max) =>{
 const checkIntersection = (object, objects, interval) =>{
 	//let result = []
 	for(let i = 0; i < objects.length; i++){
-		//console.log(Math.abs(object.y - objects[i].y <= interval))
+
 		if (Math.abs(object.x - objects[i].x) <= interval && 
 			Math.abs(object.y - objects[i].y) <= interval){
-			//console.log(`x: ${Math.abs(object.x - objects[i].x)}`)
-			//console.log(`y: ${Math.abs(object.y - objects[i].y)}`)
-			//console.log(`Hit ball_x: ${parseInt(object.x)} ball_y: ${parseInt(object.y)}\nbrick_x: ${parseInt(objects[i].x)} brick_y: ${parseInt(objects[i].y)}`)
-			//console.log(objects[i])
+
 			return objects[i]			
 		}
 	}
@@ -26,9 +23,7 @@ const checkIntersection = (object, objects, interval) =>{
 
 const checkAccurateIntersection = (object, objects) =>{
 	
-	//object_selector.getBoundingClientRect()
-	//console.log(objects_selector)
-	//console.log(objects)
+
 	for(let i = 0; i < objects.length; i++){
 	
 	if(object.top < objects[i].bottom &&
@@ -48,27 +43,16 @@ const checkAccurateIntersection = (object, objects) =>{
 
 const getScreenCoords = (selector) =>{
 		
-		//let rect = document.querySelector(selector).getBoundingClientRect()
+		
 		return document.querySelector(selector).getBoundingClientRect()
-		//return {x: rect.x, y: rect.y}
+		
 	}
 
 const transferCoordsFromDisplay = (object, property, dom_elements) =>{
 		let coords = []
 		for(let i = 0; i < dom_elements.length; i++){
 			let rect = dom_elements[i].getBoundingClientRect()
-			//coords.push({x:rect.x, y: rect.y})
-			//Надо переписать, чтобы не менять состояние, придумать структуру данных	
-			//this.cells[i].x = rect.x
-			//this.cells[i].y = rect.y
 
-			//const old = this.cells[i]
-			//const update = { x: rect.x, y: rect.y }
-
-			
-			//Можно оператором развертки сделать					
-			// object[property][i] = { ...object[property][i], 
-			// 	...{ x: rect.x + rect.width / 2, y: rect.y + rect.height / 2}}
 
 			object[property][i] = { ...object[property][i], ...{ x: rect.x,
 													 y: rect.y,
@@ -85,25 +69,8 @@ const transferCoordsFromDisplay = (object, property, dom_elements) =>{
 const getDomProperty = (dom_elements, method) =>{
 		let result = []
 		for(let i = 0; i < dom_elements.length; i++){
-			//let element_property = dom_elements[i][method]()
-			//console.log(method)
-			//console.log(dom_elements[i][])
+
 			result.push(dom_elements[i][method]())
-			//coords.push({x:rect.x, y: rect.y})
-			//Надо переписать, чтобы не менять состояние, придумать структуру данных	
-			//this.cells[i].x = rect.x
-			//this.cells[i].y = rect.y
-
-			//const old = this.cells[i]
-			//const update = { x: rect.x, y: rect.y }
-
-			
-			//Можно оператором развертки сделать					
-			// object[dest_property][i] = { ...object[dest_property][i],
-			// ...{ [source_property]: element_property[source_property],
-			// 	 [source_property]: element_property[source_property] 
-			//    }
-			// }
 
 		}
 		return result

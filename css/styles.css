@@ -22,7 +22,7 @@ html, body{
 
 #container {
   display: grid;
-  /*grid-gap: 1em;*/
+
   grid-template-rows: repeat(var(--grid-rows), 1fr);
   grid-template-columns: repeat(var(--grid-cols), 1fr);
 
@@ -38,11 +38,10 @@ html, body{
 
 #bat {
   position: absolute;
-  /*left: 1em;*/
-  /*bottom: 0;*/
+
   width: 6em;
   height: 2em;
-  /*border: 1px solid #ddd;*/
+
   background-color: red;
   text-align: center;
   padding: 0.3em;
@@ -68,20 +67,4 @@ html, body{
   text-align: center;
 
 }
-
-/*#container {
-
-
-
-	display: grid;
-
-	grid-template-rows: repeat(20, 1fr) ;
-	grid-template-columns: repeat(10, 1fr) ;
-}
-
-.cell {
-	border-style: solid;
-	border-color: green;
-	border-width: 1px;
-}*/
 

@@ -1,5 +1,7 @@
 export default class Control {
     constructor(move_speed, timerId){
+
+    	//Реализация управления, чтобы не было затыка при длительном нажатии
 		this.left = false 
 		this.right = false
 		this.stop = false

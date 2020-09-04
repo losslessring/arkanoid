@@ -1,8 +1,8 @@
 import Field from './field.js'
 
 import DisplayField from './DisplayField.js'
-import Display from './Display.js'
-import Bat from './Bat.js'
+import Display from './display.js'
+import Bat from './bat.js'
 import Ball from './ball.js'
 import Control from './control.js'
 

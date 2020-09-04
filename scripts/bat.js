@@ -66,6 +66,8 @@ export default class Bat {
 
 			this.cells[i].x = 	this.x + this.cells[i].difference_x
 			//this.cells[i].y = 	this.y + this.cells[i].difference_y
+
+			
 			this.setDeflect('deflect_x',-2, 2)
 		}
 	}

@@ -72,6 +72,7 @@ const mainCycle = (position, increment, boundary) => {
     
     //Переношу координаты - функция с побочным эффектом, ну да ладно
     transferCoordsFromDisplay(bat, "cells", document.querySelectorAll('.bat-inside'))
+    
     bat.calcDifference()
     console.log(bat.cells)
 
@@ -99,6 +100,8 @@ const mainCycle = (position, increment, boundary) => {
 
             control.move(bat)
             bat.update()
+            //Перемудрил - переношу координаты разными способами, следовало сделать одним
+            transferCoordsFromDisplay(bat, "cells", document.querySelectorAll('.bat-inside'))
 	        //console.log(bat)     
             	
             ball.move(velocity)
@@ -110,8 +113,13 @@ const mainCycle = (position, increment, boundary) => {
             // console.log(getDomProperty(document.querySelectorAll('#ball'), 'getBoundingClientRect'))
             //let hit_cell = checkIntersection(ball, field.cells, 50)
             //console.log(hit_cell)
-            let hit_bat = checkIntersection(ball, bat.cells, 50)
+            //let hit_bat = checkIntersection(ball, bat.cells, 50)
 
+            // let bat_inside_coords = [...document.querySelectorAll('.bat-inside')].map((element) =>{
+            //     return element.getBoundingClientRect()
+            // })
+            //console.log(coords)
+            let hit_bat =  checkAccurateIntersection(document.querySelector('#ball').getBoundingClientRect(),  bat.cells)
             //console.log({...hit_bat})
             //let hit = { ...hit_cell, ...hit_bat}
             //console.log(bat.cells)

@@ -37,7 +37,7 @@ const checkAccurateIntersection = (object, objects) =>{
 		   object.right > objects[i].left){
 			
 			if(objects[i].type !== 'empty'){
-				console.log(objects[i].type)	
+				console.log(objects[i])	
 			}
 			return objects[i]			
 
@@ -67,8 +67,18 @@ const transferCoordsFromDisplay = (object, property, dom_elements) =>{
 
 			
 			//Можно оператором развертки сделать					
-			object[property][i] = { ...object[property][i], 
-				...{ x: rect.x + rect.width / 2, y: rect.y + rect.height / 2}}
+			// object[property][i] = { ...object[property][i], 
+			// 	...{ x: rect.x + rect.width / 2, y: rect.y + rect.height / 2}}
+
+			object[property][i] = { ...object[property][i], ...{ x: rect.x,
+													 y: rect.y,
+													 top: rect.top,
+													 bottom: rect.bottom,
+													 left: rect.left,
+													 right: rect.right,
+													 height: rect.height,
+													 width: rect.width
+													  } }	
 		}
 	}
 
